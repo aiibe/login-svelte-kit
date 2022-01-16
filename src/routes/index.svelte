@@ -1,2 +1,15 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import Header from '../ui/header.svelte';
+	import Form from '../ui/form.svelte';
+	import Footer from '../ui/footer.svelte';
+
+	import '../styling/global.scss';
+</script>
+
+<svelte:head>
+	<title>Login Svelte Kit</title>
+</svelte:head>
+
+<Header />
+<Form />
+<Footer />
