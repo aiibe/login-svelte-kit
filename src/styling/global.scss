@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-*,
-*:before,
-*:after {
-	box-sizing: inherit;
-}
-
 html {
 	box-sizing: border-box;
 	height: 100%;
@@ -14,6 +8,12 @@ html {
 		rgba(97, 186, 255, 1) 0%,
 		rgba(166, 239, 253, 1) 90.1%
 	);
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
 }
 
 body {

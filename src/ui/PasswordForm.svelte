@@ -1,36 +1,23 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	let placeholder = 'ENTER YOUR EMAIL';
+	let placeholder = 'ENTER YOUR PASSWORD';
+	let password = '';
 
 	const handleSubmit = async (event: Event) => {
 		event.preventDefault();
-		const response = await fetch('/auth/validEmail', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email })
-		});
-		const data = await response.json();
 
-		if (!data.error) {
-			hasEmail = true;
-		} else {
-			email = '';
-			placeholder = data.error;
-		}
+		hasValidPassword = true;
 	};
 
-	export let hasEmail: boolean;
-	export let email: string;
+	export let hasValidPassword: boolean;
 </script>
 
 <form on:submit={handleSubmit} class="form__content">
-	<input type="email" {placeholder} bind:value={email} />
-	<button type="submit" disabled={email.length < 2}>
+	<input type="password" {placeholder} bind:value={password} />
+	<button type="submit" disabled={password.length < 5}>
 		<svg width="24" height="24" viewBox="0 0 24 24" fill="#5393C1">
-			{#if email.length > 2}
+			{#if password.length > 5}
 				<path
 					d="M13.025 0L10.178 3.08509L16.354 9.82255H0V14.1775H16.354L10.178 20.9149L13.025 24L24 12L13.025 0Z"
 					transition:fly={{ x: -50, y: 0 }}
