@@ -1,7 +1,7 @@
 <script>
-	import Header from '../ui/header.svelte';
-	import Form from '../ui/form.svelte';
-	import Footer from '../ui/footer.svelte';
+	import Header from '../ui/Header.svelte';
+	import LoginForm from '../ui/LoginForm.svelte';
+	import Footer from '../ui/Footer.svelte';
 
 	import '../styling/global.scss';
 </script>
@@ -11,5 +11,5 @@
 </svelte:head>
 
 <Header />
-<Form />
+<LoginForm />
 <Footer />
