@@ -1,5 +1,8 @@
 <script lang="ts">
 	import EmailForm from './EmailForm.svelte';
+
+	let hasEmail = false,
+		hasValidPassword = false;
 </script>
 
 <section class="login">
@@ -9,7 +12,9 @@
 				<h1>Login</h1>
 			</div>
 		</div>
-		<EmailForm />
+		{#if !hasEmail}
+			<EmailForm bind:hasEmail />
+		{/if}
 	</div>
 </section>
 

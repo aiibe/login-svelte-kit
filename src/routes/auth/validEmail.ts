@@ -1,23 +1,30 @@
-import { initializeApp, cert } from 'firebase-admin/app';
+import { initializeApp, cert, getApps, getApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
+const account = JSON.parse(import.meta.env.VITE_FIREBASE_ACCOUNT as string);
 
-const serviceAccount = JSON.parse(import.meta.env.VITE_SERVICE_ACCOUNT as string);
-
-const app = initializeApp({
-	credential: cert(serviceAccount)
-});
+const app = getApps().length
+	? getApp()
+	: initializeApp({
+			credential: cert(account)
+	  });
 
 const auth = getAuth(app);
 
-export async function get() {
-	let hasUser = null;
+export async function post({
+	body: { email }
+}): Promise<{ body: { email?: string; error?: string } }> {
 	try {
-		hasUser = await auth.getUserByEmail('demo@email.com');
-	} catch (error) {}
-
-	return {
-		body: {
-			data: hasUser
-		}
-	};
+		const hasUser = await auth.getUserByEmail(email);
+		return {
+			body: {
+				email: hasUser.email
+			}
+		};
+	} catch (error) {
+		return {
+			body: {
+				error: 'EMAIL CANNOT BE FOUND'
+			}
+		};
+	}
 }

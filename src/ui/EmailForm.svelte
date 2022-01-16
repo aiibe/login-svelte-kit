@@ -4,11 +4,21 @@
 	let emailPlaceholder = 'ENTER YOUR EMAIL',
 		email = '';
 
-	const handleSubmit = (event: Event) => {
+	const handleSubmit = async (event: Event) => {
 		event.preventDefault();
+		const response = await fetch('/auth/validEmail', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ email })
+		});
 
-		console.log({ email });
+		const data = await response.json();
+		if (!data.error) return (hasEmail = true);
 	};
+
+	export let hasEmail: boolean;
 </script>
 
 <form on:submit={handleSubmit} class="form__content">
@@ -18,13 +28,11 @@
 			{#if email.length > 2}
 				<path
 					d="M13.025 0L10.178 3.08509L16.354 9.82255H0V14.1775H16.354L10.178 20.9149L13.025 24L24 12L13.025 0Z"
-					in:fly={{ x: -50, y: 0 }}
-					out:fly={{ x: -50, y: 0 }}
+					transition:fly={{ x: -50, y: 0 }}
 				/>
 			{:else}
 				<path
-					in:fly={{ x: 50, y: 0 }}
-					out:fly={{ x: 50, y: 0 }}
+					transition:fly={{ x: -50, y: 0 }}
 					d="M0 0V20H24V0H0ZM6.623 8.81L2 15.1567V4.64778L6.623 8.81ZM2.482 2.22222H21.517L12 10.7922L2.482 2.22222ZM8.176 10.2089L12 13.6522L15.83 10.2033L21.442 17.7778H2.663L8.176 10.2089ZM17.384 8.80444L22 4.64778V15.0344L17.384 8.80444Z"
 				/>
 			{/if}
