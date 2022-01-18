@@ -2,11 +2,8 @@
 	import EmailForm from './EmailForm.svelte';
 	import PasswordForm from './PasswordForm.svelte';
 
-	let email = '';
-	let hasEmail = false;
-
-	let password = '';
-	let hasValidPassword = false;
+	let userEmail = '';
+	let userPassword = '';
 </script>
 
 <section class="login">
@@ -17,8 +14,8 @@
 			</div>
 		</div>
 
-		{#if !hasEmail}
-			<EmailForm bind:hasEmail bind:email />
+		{#if !userEmail.length}
+			<EmailForm bind:userEmail />
 		{/if}
 
 		<!-- {#if !hasValidPassword}
