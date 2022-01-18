@@ -18,8 +18,8 @@
 			<EmailForm bind:userEmail />
 		{/if}
 
-		<!-- {#if !hasValidPassword}
-			<PasswordForm bind:hasValidPassword />
+		<!-- {#if !userPassword.length}
+			<PasswordForm bind:userPassword />
 		{/if} -->
 	</div>
 </section>

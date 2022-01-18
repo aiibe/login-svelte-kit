@@ -1,19 +1,15 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	let placeholder = 'ENTER YOUR PASSWORD';
 	let password = '';
+	let placeholder = 'ENTER YOUR PASSWORD';
 
-	const handleSubmit = async (event: Event) => {
-		event.preventDefault();
+	const handleSubmit = async () => {};
 
-		hasValidPassword = true;
-	};
-
-	export let hasValidPassword: boolean;
+	export let userPassword: string;
 </script>
 
-<form on:submit={handleSubmit} class="form__content">
+<form on:submit|preventDefault={handleSubmit} class="form__content">
 	<input type="password" {placeholder} bind:value={password} />
 	<button type="submit" disabled={password.length < 5}>
 		<svg width="24" height="24" viewBox="0 0 24 24" fill="#5393C1">

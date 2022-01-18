@@ -8,3 +8,4 @@ node_modules
 !.env.example
 serviceAccount.json
 .vercel
+rest.http

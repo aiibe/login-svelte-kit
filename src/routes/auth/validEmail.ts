@@ -1,30 +1,26 @@
-import { initializeApp, cert, getApps, getApp } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
-const account = JSON.parse(import.meta.env.VITE_FIREBASE_ACCOUNT as string);
+import { SIGN_IN } from './_auth';
 
-const app = getApps().length
-	? getApp()
-	: initializeApp({
-			credential: cert(account)
-	  });
-
-const auth = getAuth(app);
-
+// This step's purpose is only to check whether the email is found
+// Therefore the password can be anything
 export async function post({
 	body: { email }
 }): Promise<{ body: { email?: string; error?: string } }> {
 	try {
-		const hasUser = await auth.getUserByEmail(email);
+		const res = await fetch(SIGN_IN, {
+			method: 'POST',
+			headers: { 'CONTENT-TYPE': 'application/json' },
+			body: JSON.stringify({ email, password: 'XXX-XXX' })
+		});
+
+		// Look for error message
+		const {
+			error: { message }
+		} = await res.json();
+
 		return {
-			body: {
-				email: hasUser.email
-			}
+			body: message === 'EMAIL_NOT_FOUND' ? { error: 'EMAIL CANNOT BE FOUND' } : { email }
 		};
 	} catch (error) {
-		return {
-			body: {
-				error: 'EMAIL CANNOT BE FOUND'
-			}
-		};
+		console.log(error);
 	}
 }
