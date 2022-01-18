@@ -1,31 +1,12 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	let email = '';
-	let placeholder = 'ENTER YOUR EMAIL';
-
-	const handleSubmit = async () => {
-		const response = await fetch('/auth/validEmail', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email })
-		});
-		const data = await response.json();
-
-		if (!data.error) {
-			userEmail = data.email;
-		} else {
-			email = '';
-			placeholder = data.error;
-		}
-	};
-
-	export let userEmail: string;
+	export let email: string;
+	export let placeholder: string;
+	export let checkEmail: () => void;
 </script>
 
-<form on:submit|preventDefault={handleSubmit} class="form__content">
+<form on:submit|preventDefault={checkEmail} class="form__content">
 	<input type="email" {placeholder} bind:value={email} />
 	<button type="submit" disabled={email.length < 2}>
 		<svg width="24" height="24" viewBox="0 0 24 24" fill="#5393C1">

@@ -2,8 +2,42 @@
 	import EmailForm from './EmailForm.svelte';
 	import PasswordForm from './PasswordForm.svelte';
 
-	let userEmail = '';
-	let userPassword = '';
+	let email = '';
+	let emailPlaceholder = 'ENTER YOUR EMAIL';
+	let validEmail = false;
+
+	async function checkEmail() {
+		const response = await fetch('/auth/validEmail', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ email })
+		});
+		const data = await response.json();
+
+		if (!data.error) {
+			email = data.email;
+			validEmail = true;
+		} else {
+			email = '';
+			emailPlaceholder = data.error;
+		}
+	}
+
+	let password = '';
+	let passwordPlaceholder = 'ENTER YOUR PASSWORD';
+	let validPassword = false;
+
+	async function login() {
+		const response = await fetch('/auth/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ email, password })
+		});
+	}
 </script>
 
 <section class="login">
@@ -14,12 +48,12 @@
 			</div>
 		</div>
 
-		{#if !userEmail.length}
-			<EmailForm bind:userEmail />
+		{#if !validEmail}
+			<EmailForm {checkEmail} bind:email bind:placeholder={emailPlaceholder} />
 		{/if}
 
-		<!-- {#if !userPassword.length}
-			<PasswordForm bind:userPassword />
+		<!-- {#if !validPassword}
+			<PasswordForm />
 		{/if} -->
 	</div>
 </section>
