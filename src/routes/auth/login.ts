@@ -13,46 +13,43 @@ export async function post({ body: { email, password } }: ARG): Promise<{
 	headers?: any;
 	status?: number;
 }> {
-	try {
-		const res = await fetch(SIGN_IN, {
-			method: 'POST',
-			headers: { 'CONTENT-TYPE': 'application/json' },
-			body: JSON.stringify({ email, password })
-		});
+	const res = await fetch(SIGN_IN, {
+		method: 'POST',
+		headers: { 'CONTENT-TYPE': 'application/json' },
+		body: JSON.stringify({ email, password })
+	});
 
-		const {
-			kind,
-			localId,
-			email: userEmail,
-			displayName,
-			idToken,
-			register,
-			error
-		} = await res.json();
+	const {
+		kind,
+		localId,
+		email: userEmail,
+		displayName,
+		idToken,
+		register,
+		error
+	} = await res.json();
 
-		// Invalid password
-		if (error)
-			return {
-				body: {
-					error: 'INVALID PASSWORD'
-				}
-			};
-
-		// Ok
-		const headers = {
-			'Set-Cookie': cookie.serialize('token', idToken, {
-				httpOnly: true,
-				sameSite: 'lax',
-				maxAge: 60 * 60 * 24 * 7,
-				path: '/'
-			})
-		};
+	// Invalid password
+	if (error)
 		return {
-			status: 200,
-			headers,
-			body: { email }
+			body: {
+				error: 'INVALID PASSWORD'
+			}
 		};
-	} catch (error) {
-		console.log(error);
-	}
+
+	// Ok
+	const headers = {
+		'Set-Cookie': cookie.serialize('token', idToken, {
+			httpOnly: true,
+			sameSite: 'lax',
+			maxAge: 60 * 60 * 24 * 7,
+			path: '/'
+		})
+	};
+
+	return {
+		status: 200,
+		headers,
+		body: { email }
+	};
 }

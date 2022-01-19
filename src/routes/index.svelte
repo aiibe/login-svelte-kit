@@ -1,15 +1,18 @@
-<script>
-	import Header from '../ui/Header.svelte';
-	import LoginForm from '../ui/LoginForm.svelte';
-	import Footer from '../ui/Footer.svelte';
+<script context="module" lang="ts">
+	export async function load({ session }) {
+		const { user } = session;
+		if (user)
+			return {
+				status: 302,
+				redirect: '/protected'
+			};
 
-	import '../styling/global.scss';
+		return { props: {} };
+	}
 </script>
 
-<svelte:head>
-	<title>Login Svelte Kit</title>
-</svelte:head>
+<script>
+	import LoginForm from '../ui/LoginForm.svelte';
+</script>
 
-<Header />
 <LoginForm />
-<Footer />
