@@ -2,7 +2,7 @@
 	import EmailForm from './EmailForm.svelte';
 	import PasswordForm from './PasswordForm.svelte';
 
-	let email = '';
+	let email = 'mail@mail.com';
 	let emailPlaceholder = 'ENTER YOUR EMAIL';
 	let validEmail = false;
 
@@ -37,6 +37,15 @@
 			},
 			body: JSON.stringify({ email, password })
 		});
+
+		const { email: userEmail, idToken, error } = await response.json();
+
+		if (error) {
+			password = '';
+			passwordPlaceholder = error;
+		} else {
+			validPassword = true;
+		}
 	}
 </script>
 
@@ -52,9 +61,9 @@
 			<EmailForm {checkEmail} bind:email bind:placeholder={emailPlaceholder} />
 		{/if}
 
-		<!-- {#if !validPassword}
-			<PasswordForm />
-		{/if} -->
+		{#if !validPassword}
+			<PasswordForm {login} bind:password bind:placeholder={passwordPlaceholder} />
+		{/if}
 	</div>
 </section>
 
