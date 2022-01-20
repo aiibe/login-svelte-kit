@@ -5,7 +5,7 @@
 	import EmailForm from './EmailForm.svelte';
 	import PasswordForm from './PasswordForm.svelte';
 
-	let email = 'mail@mail.com';
+	let email = '';
 	let emailPlaceholder = 'ENTER YOUR EMAIL';
 	let validEmail = false;
 
