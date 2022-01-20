@@ -1,5 +1,7 @@
 <script context="module" lang="ts">
-	export async function load({ session }) {
+	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
+
+	export async function load({ session }: LoadInput): Promise<LoadOutput> {
 		if (!session.user)
 			return {
 				status: 302,

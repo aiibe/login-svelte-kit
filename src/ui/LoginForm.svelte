@@ -14,14 +14,15 @@
 			},
 			body: JSON.stringify({ email })
 		});
-		const data = await response.json();
+		const { error: err, email: confirmedEmail }: { error?: string; email?: string } =
+			await response.json();
 
-		if (!data.error) {
-			email = data.email;
+		if (err) {
+			email = confirmedEmail;
 			validEmail = true;
 		} else {
 			email = '';
-			emailPlaceholder = data.error;
+			emailPlaceholder = err;
 		}
 	}
 
@@ -38,11 +39,15 @@
 			body: JSON.stringify({ email, password })
 		});
 
-		const { email: userEmail, idToken, error } = await response.json();
+		const {
+			email: confirmedEmail,
+			idToken,
+			error: err
+		}: { email?: string; error?: string; idToken: string } = await response.json();
 
-		if (error) {
+		if (err) {
 			password = '';
-			passwordPlaceholder = error;
+			passwordPlaceholder = err;
 		} else {
 			validPassword = true;
 		}
