@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { session } from '$app/stores';
 	import { requestLogin, requestValidEmail, ResponseLogin, ResponseValidEmail } from '$lib/request';
 	import EmailForm from './EmailForm.svelte';
 	import PasswordForm from './PasswordForm.svelte';
@@ -33,6 +35,8 @@
 			passwordPlaceholder = err;
 		} else {
 			validPassword = true;
+			$session.user = { token: idToken };
+			goto('/protected');
 		}
 	}
 </script>

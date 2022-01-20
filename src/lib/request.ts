@@ -9,6 +9,10 @@ export type ResponseLogin = {
 	idToken: string;
 };
 
+export type ResponseSignOut = {
+	success: boolean;
+};
+
 const headers = {
 	'Content-Type': 'application/json'
 };
@@ -31,4 +35,16 @@ export const requestLogin = async (email: string, password: string): Promise<Res
 		body: JSON.stringify({ email, password })
 	});
 	return await res.json();
+};
+
+// Call '/auth/logout' to log out current user
+export const requestSignOut = async (): Promise<ResponseSignOut> => {
+	const resp = await fetch('/auth/logout', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({})
+	});
+	return await resp.json();
 };

@@ -57,6 +57,6 @@ export async function post({ body }: Params): Promise<EndpointOutput> {
 				path: '/'
 			})
 		},
-		body: { email: userEmail }
+		body: { email: userEmail, idToken }
 	};
 }
