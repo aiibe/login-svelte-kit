@@ -24,36 +24,3 @@
 		</svg>
 	</button>
 </form>
-
-<style type="scss">
-	.form {
-		&__content {
-			border-radius: 0 0 15px 15px;
-			display: flex;
-			background-color: #f4f4f4;
-
-			input {
-				flex-grow: 1;
-				font-size: 12px;
-				padding: 20px;
-				border: 4px transparent solid;
-				background-color: inherit;
-
-				&:focus-visible {
-					outline: 0;
-					border: 4px solid #abb8cb;
-					border-radius: 0 0 0 15px;
-				}
-			}
-
-			button {
-				min-width: 64px;
-				border: 0;
-				background: linear-gradient(126.27deg, #a6effd 3.02%, #5cb0ec 100%);
-				&:not(:disabled) {
-					cursor: pointer;
-				}
-			}
-		}
-	}
-</style>

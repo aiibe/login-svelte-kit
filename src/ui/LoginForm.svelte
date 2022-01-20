@@ -45,32 +45,14 @@
 			</div>
 		</div>
 
-		{#if !validEmail}
-			<EmailForm {checkEmail} bind:email bind:placeholder={emailPlaceholder} />
-		{/if}
+		<div class="form__body">
+			{#if !validEmail}
+				<EmailForm {checkEmail} bind:email bind:placeholder={emailPlaceholder} />
+			{/if}
 
-		{#if !validPassword}
-			<PasswordForm {login} bind:password bind:placeholder={passwordPlaceholder} />
-		{/if}
+			{#if !validPassword}
+				<PasswordForm {login} bind:password bind:placeholder={passwordPlaceholder} />
+			{/if}
+		</div>
 	</div>
 </section>
-
-<style type="scss">
-	.form {
-		overflow: hidden;
-		border-radius: 15px;
-		background-color: white;
-		margin: 0 15px;
-		box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-
-		&__header {
-			&-left {
-				padding: 15px;
-			}
-
-			h1 {
-				margin: 0;
-			}
-		}
-	}
-</style>
