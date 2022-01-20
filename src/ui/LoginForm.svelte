@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { requestLogin, requestValidEmail, ResponseLogin, ResponseValidEmail } from '$lib/request';
 	import EmailForm from './EmailForm.svelte';
 	import PasswordForm from './PasswordForm.svelte';
 
@@ -7,17 +8,10 @@
 	let validEmail = false;
 
 	async function checkEmail() {
-		const response = await fetch('/auth/validEmail', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email })
-		});
-		const { error: err, email: confirmedEmail }: { error?: string; email?: string } =
-			await response.json();
+		const data: ResponseValidEmail = await requestValidEmail(email);
+		const { error: err, email: confirmedEmail } = data;
 
-		if (err) {
+		if (!err) {
 			email = confirmedEmail;
 			validEmail = true;
 		} else {
@@ -31,19 +25,8 @@
 	let validPassword = false;
 
 	async function login() {
-		const response = await fetch('/auth/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email, password })
-		});
-
-		const {
-			email: confirmedEmail,
-			idToken,
-			error: err
-		}: { email?: string; error?: string; idToken: string } = await response.json();
+		const data: ResponseLogin = await requestLogin(email, password);
+		const { error: err, email: confirmedEmail, idToken } = data;
 
 		if (err) {
 			password = '';
